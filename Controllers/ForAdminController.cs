@@ -69,18 +69,18 @@ public class ForAdminController : ControllerBase
         return Ok(usersData);
     }
     [HttpDelete("deliteuser")]
-    public async Task<IActionResult> DeleteUser(int id)
+    public async Task<IActionResult> DeleteUser(int id_user)
     {
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.Users.FindAsync(id_user);
 
         if (user == null)
         {
-            return NotFound(); // Если пользователь с указанным id не найден, возвращаем 404 Not Found
+            return NotFound("User not found"); // Если пользователь с указанным id не найден, возвращаем 404 Not Found
         }
 
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
 
-        return NoContent(); // Возвращаем 204 No Content, если удаление прошло успешно
+        return Ok("User delited"); 
     }
 }
