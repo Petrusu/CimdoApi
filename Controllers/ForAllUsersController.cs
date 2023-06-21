@@ -12,11 +12,12 @@ namespace CimdoApi.Controllers;
 [Route("api/[controller]")]
 public class ForAllUsersController : ControllerBase
 {
-    private readonly CimdoContext _context;
+    private readonly CimdoContext _context; //подключение к базе данных
     public ForAllUsersController(CimdoContext context)
     {
         _context = context;
     }
+    //создание списка книг
     private static IEnumerable<Book> GetBooks() //подключение к базе данных
     {
         using (var context = new CimdoContext())
@@ -24,12 +25,14 @@ public class ForAllUsersController : ControllerBase
             return context.Books.ToList();
         }
     }
+    //запрос на вывод всех вниг
     [HttpGet("getbooks")]
     public ActionResult GetDataApi()
     {
         var booksData = GetBooks(); //вывод данных в api
         return Ok(booksData);
     }
+    //создние списка жанров
     private static IEnumerable<Gener> GetGeners() //подключение к базе данных
     {
         using (var context = new CimdoContext())
@@ -37,16 +40,20 @@ public class ForAllUsersController : ControllerBase
             return context.Geners.ToList();
         }
     }
+    //вывод жанров
     [HttpGet("getgeners")]
     public ActionResult GetData()
     {
         var genersData = GetGeners(); //вывод данных в api
         return Ok(genersData);
     }
+    //запрос на информацию о конкретной книге
     [HttpGet("getinformationaboutbook")]
     public async Task<ActionResult<ModelBookForFavarite>> GetInformationAboutBook(int bookId)
     {
-        int userId = GetUserIdFromToken();
+        int userId = GetUserIdFromToken(); //из токена получаем id пользователя
+        
+        //запрос к бд для нахождения книги соотвествующей введенному id
         var favoriteBook = await _context.Favorites
             .Include(f => f.IdBookNavigation)
             .ThenInclude(book => book.AuthorNavigation)
@@ -62,13 +69,13 @@ public class ForAllUsersController : ControllerBase
         {
             IdBook = favoriteBook.IdBookNavigation.IdBook,
             Title = favoriteBook.IdBookNavigation.Title,
-            Author = favoriteBook.IdBookNavigation.AuthorNavigation.Author1, // Используем свойство Author1 из модели ModelAuthor
+            Author = favoriteBook.IdBookNavigation.AuthorNavigation.Author1, 
             Description = favoriteBook.IdBookNavigation.Description
         };
 
         return Ok(bookInformation); // возвращаем информацию о книге
     }
-    
+    //рекомендация книг для пользователя
     [HttpGet("recommendations")]
     public async Task<IActionResult> GetRecommendedBooks()
     {
@@ -80,11 +87,13 @@ public class ForAllUsersController : ControllerBase
             .Include(u => u.UsersGeners)
             .FirstOrDefaultAsync(u => u.IdUser == userId);
 
+        //получаем жанры
         var genreIds = user.UsersGeners.Select(ug => ug.IdGener).ToArray();
 
+        //выбираем книги по жанрам пользователя
         var books = await _context.Books
             .Where(b => b.BooksGeners.Any(bg => genreIds.Contains(bg.IdGener)))
-            .Include(b => b.AuthorNavigation) // Включаем связанную сущность "Author"
+            .Include(b => b.AuthorNavigation) 
             .Select(b => new 
             {
                 Id = b.IdBook,
@@ -93,55 +102,58 @@ public class ForAllUsersController : ControllerBase
             })
             .ToListAsync();
 
-        return Ok(books);
+        return Ok(books); //выводим рекомендованные книги
     }
 
+    //добавление книги в избранное
     [HttpPost("addbookforfavorite")]
     public IActionResult AddBookForFavorite(int idBook)
     {
 
-        int idUser = GetUserIdFromToken();
-        Favorite favoriteModel = new Favorite
+        int idUser = GetUserIdFromToken(); //получаем id пользователя из токена
+        Favorite favoriteModel = new Favorite //экземпляр класса избранного
         {
             IdUser = idUser,
             IdBook = idBook
         };
 
-        _context.Favorites.Add(favoriteModel);
-        _context.SaveChanges();
+        _context.Favorites.Add(favoriteModel); //добавляем 
+        _context.SaveChanges(); //сохраняем
 
         return Ok("Book add to favorite.");
     }
 
+    //добавляем предпочитаемые жанры
     [HttpPost("addfavoritegeners")]
     public IActionResult AddFavoriteGeners(int idGener)
     {
 
-        int idUser = GetUserIdFromToken();
+        int idUser = GetUserIdFromToken(); //id пользователя из токена
         UsersGener favoritegenerModel = new UsersGener()
         {
             IdUser = idUser,
             IdGener = idGener
         };
 
-        _context.UsersGeners.Add(favoritegenerModel);
-        _context.SaveChanges();
+        _context.UsersGeners.Add(favoritegenerModel); //добавляем
+        _context.SaveChanges(); //сохраняем
 
         return Ok("Gener add to favorite.");
     }
 
+    //удаляем книгу из избранного
     [HttpDelete("removebookfromfavorites")]
     public async Task<IActionResult> DeleteBookFromFavarite(int idBook)
     {
-        var book =  _context.Favorites.FirstOrDefault(b => b.IdBook == idBook);
+        var book =  _context.Favorites.FirstOrDefault(b => b.IdBook == idBook); //находим книгу по id
 
         if (book == null)
         {
             return NotFound("Book not found"); // Если пользователь с указанным id не найден, возвращаем 404 Not Found
         }
 
-        _context.Favorites.Remove(book);
-        await _context.SaveChangesAsync();
+        _context.Favorites.Remove(book); //удаляем
+        await _context.SaveChangesAsync(); //сохраняем
 
         return Ok("Book delited"); 
     }

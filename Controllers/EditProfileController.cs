@@ -9,13 +9,14 @@ namespace CimdoApi.Controllers;
 [Route("api/[controller]")]
 public class EditProfileController : ControllerBase
 {
-    private readonly CimdoContext _context;
+    private readonly CimdoContext _context; //подключение бд
 
-    public EditProfileController(CimdoContext context)
+    public EditProfileController(CimdoContext context) //конструктор контроллера
     {
         _context = context;
     }
 
+    //запрос на изменения пароля
     [HttpPut("changepassword")]
     public IActionResult ChangePassword(ModelChangePassword requeat)
     {
@@ -26,31 +27,33 @@ public class EditProfileController : ControllerBase
             return Unauthorized(); // Пользователь не найден
         }
         
-        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(requeat.OldPassword, user.Password);
+        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(requeat.OldPassword, user.Password); //тк пароль зашифрованный, то идет проверка размерности старого пароля
 
         // Если пароль действителен
         if (isPasswordValid)
         {
-            if (requeat.Password == requeat.PasswordAgain)
+            if (requeat.Password == requeat.PasswordAgain) //проверка точности пароля
             {
                 // Шифрование пароля
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(requeat.Password);
 
                 user.Password = hashedPassword;
 
-                _context.SaveChanges();
+                _context.SaveChanges(); //сохранения нового пароля
                 return Ok("Password changed");
             }
             else
             {
-                return BadRequest("Password mismatch");
+                return BadRequest("Password mismatch"); //если пароли не совпадают
             }
         }
         else
         {
-            return BadRequest("Old password is not mismatch");
+            return BadRequest("Old password is not mismatch"); //если старый пароль не совпадает
         }
     }
+    
+    //изменения email
     [HttpPut("changeemail")]
     public IActionResult ChangeEmail(ModelChangeEmail requeat)
     {
@@ -63,10 +66,12 @@ public class EditProfileController : ControllerBase
 
         user.Email = requeat.Email;
 
-        _context.SaveChanges();
+        _context.SaveChanges(); //сохранение нового мыла
 
         return Ok("Email changed");
     }
+    
+    //изменение логина
     [HttpPut("changelogin")]
     public IActionResult ChangeLogin(ModelChangeLogin requeat)
     {
@@ -85,7 +90,7 @@ public class EditProfileController : ControllerBase
         }
 
         user.Login = requeat.Login;
-        _context.SaveChanges();
+        _context.SaveChanges(); //сохранение нового логина
 
         return Ok("Login changed");
     }
