@@ -38,9 +38,17 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "BCrypt.Net": {
+              "target": "Package",
+              "version": "[0.1.0, )"
+            },
             "HiNetCloud.System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[23.6.13.9, )"
+              "version": "[23.5.23.10, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
@@ -89,6 +97,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.31.0, )"
             }
           },
           "imports": [

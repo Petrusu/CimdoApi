@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="HiNetCloud.System.IdentityModel.Tokens.Jwt" Version="23.6.13.9" />
+        <PackageReference Include="BCrypt.Net" Version="0.1.0" />
+        <PackageReference Include="HiNetCloud.System.IdentityModel.Tokens.Jwt" Version="23.5.23.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.5.23280.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.5.23280.1">
@@ -25,6 +27,7 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.4" />
         <PackageReference Include="NSwag.Core" Version="13.19.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
     </ItemGroup>
 
 </Project>

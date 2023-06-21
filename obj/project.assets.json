@@ -46,6 +46,19 @@
           }
         }
       },
+      "BCrypt.Net/0.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net35/BCrypt.Net.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net35/BCrypt.Net.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Castle.Core/5.1.1": {
         "type": "package",
         "dependencies": {
@@ -62,7 +75,7 @@
           }
         }
       },
-      "HiNetCloud.System.IdentityModel.Tokens.Jwt/23.6.13.9": {
+      "HiNetCloud.System.IdentityModel.Tokens.Jwt/23.5.23.10": {
         "type": "package",
         "compile": {
           "lib/net48/System.IdentityModel.Tokens.Jwt.dll": {}
@@ -83,6 +96,25 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.15.1"
+        },
+        "compile": {
+          "lib/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.AspNetCore.OpenApi/7.0.5": {
         "type": "package",
@@ -1233,11 +1265,11 @@
           }
         }
       },
-      "System.IdentityModel.Tokens.Jwt/6.24.0": {
+      "System.IdentityModel.Tokens.Jwt/6.31.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.IdentityModel.JsonWebTokens": "6.24.0",
-          "Microsoft.IdentityModel.Tokens": "6.24.0"
+          "Microsoft.IdentityModel.JsonWebTokens": "6.31.0",
+          "Microsoft.IdentityModel.Tokens": "6.31.0"
         },
         "compile": {
           "lib/net6.0/System.IdentityModel.Tokens.Jwt.dll": {
@@ -2052,6 +2084,19 @@
         "lib/netstandard2.0/Azure.Identity.xml"
       ]
     },
+    "BCrypt.Net/0.1.0": {
+      "sha512": "sST2w361Dxt9GGMfpOTiK50wXGV64Ybb1hiX3xjEWnhVYZNF43NuySGwADJa7X1R+bA53NsFR+tuDxcYiJeIOA==",
+      "type": "package",
+      "path": "bcrypt.net/0.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bcrypt.net.0.1.0.nupkg.sha512",
+        "bcrypt.net.nuspec",
+        "lib/net35/BCrypt.Net.XML",
+        "lib/net35/BCrypt.Net.dll"
+      ]
+    },
     "Castle.Core/5.1.1": {
       "sha512": "rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
       "type": "package",
@@ -2076,14 +2121,14 @@
         "readme.txt"
       ]
     },
-    "HiNetCloud.System.IdentityModel.Tokens.Jwt/23.6.13.9": {
-      "sha512": "NcaACtjDUVrTq16/6Rra22qNqUz4mdu6giQmiAMUbEu0ofjsFePzmQOZllhCPn2Zbga/qTgEdixB6EvayaLoow==",
+    "HiNetCloud.System.IdentityModel.Tokens.Jwt/23.5.23.10": {
+      "sha512": "vINuOER8wviLHzKOpbDD0jYeZbSPb5/0UjVBxa24+OpJrPOtSZ9SoJjFSuMklvY1hdTZohJ7GFLBY8KTnUb1SQ==",
       "type": "package",
-      "path": "hinetcloud.system.identitymodel.tokens.jwt/23.6.13.9",
+      "path": "hinetcloud.system.identitymodel.tokens.jwt/23.5.23.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "hinetcloud.system.identitymodel.tokens.jwt.23.6.13.9.nupkg.sha512",
+        "hinetcloud.system.identitymodel.tokens.jwt.23.5.23.10.nupkg.sha512",
         "hinetcloud.system.identitymodel.tokens.jwt.nuspec",
         "lib/net48/MZNEY6NVYJMYUI6NFBMY6VAYR.md5",
         "lib/net48/System.IdentityModel.Tokens.Jwt.dll"
@@ -2105,6 +2150,21 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.5": {
+      "sha512": "dS6LPC7ZwJUcxcnB7KBh5L7iO9dbzEuVrNv2YrtiUCclcvBCfCJ/UKlvgHedjd4VcB6bzHcj3sEmFZlfH6qH0Q==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/7.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll",
+        "lib/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.xml",
+        "microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.jwtbearer.nuspec"
       ]
     },
     "Microsoft.AspNetCore.OpenApi/7.0.5": {
@@ -4252,10 +4312,10 @@
         "system.globalization.extensions.nuspec"
       ]
     },
-    "System.IdentityModel.Tokens.Jwt/6.24.0": {
-      "sha512": "Qibsj9MPWq8S/C0FgvmsLfIlHLE7ay0MJIaAmK94ivN3VyDdglqReed5qMvdQhSL0BzK6v0Z1wB/sD88zVu6Jw==",
+    "System.IdentityModel.Tokens.Jwt/6.31.0": {
+      "sha512": "OTlLhhNHODxZvqst0ku8VbIdYNKi25SyM6/VdbpNUe6aItaecVRPtURGvpcQpzltr9H0wy+ycAqBqLUI4SBtaQ==",
       "type": "package",
-      "path": "system.identitymodel.tokens.jwt/6.24.0",
+      "path": "system.identitymodel.tokens.jwt/6.31.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4263,13 +4323,15 @@
         "lib/net45/System.IdentityModel.Tokens.Jwt.xml",
         "lib/net461/System.IdentityModel.Tokens.Jwt.dll",
         "lib/net461/System.IdentityModel.Tokens.Jwt.xml",
+        "lib/net462/System.IdentityModel.Tokens.Jwt.dll",
+        "lib/net462/System.IdentityModel.Tokens.Jwt.xml",
         "lib/net472/System.IdentityModel.Tokens.Jwt.dll",
         "lib/net472/System.IdentityModel.Tokens.Jwt.xml",
         "lib/net6.0/System.IdentityModel.Tokens.Jwt.dll",
         "lib/net6.0/System.IdentityModel.Tokens.Jwt.xml",
         "lib/netstandard2.0/System.IdentityModel.Tokens.Jwt.dll",
         "lib/netstandard2.0/System.IdentityModel.Tokens.Jwt.xml",
-        "system.identitymodel.tokens.jwt.6.24.0.nupkg.sha512",
+        "system.identitymodel.tokens.jwt.6.31.0.nupkg.sha512",
         "system.identitymodel.tokens.jwt.nuspec"
       ]
     },
@@ -6681,7 +6743,9 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "HiNetCloud.System.IdentityModel.Tokens.Jwt >= 23.6.13.9",
+      "BCrypt.Net >= 0.1.0",
+      "HiNetCloud.System.IdentityModel.Tokens.Jwt >= 23.5.23.10",
+      "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.5",
       "Microsoft.AspNetCore.OpenApi >= 7.0.5",
       "Microsoft.EntityFrameworkCore >= 8.0.0-preview.5.23280.1",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.0-preview.5.23280.1",
@@ -6692,7 +6756,8 @@
       "Microsoft.IdentityModel.Tokens >= 6.31.0",
       "NSwag.Core >= 13.19.0",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 8.0.0-preview.4",
-      "Swashbuckle.AspNetCore >= 6.4.0"
+      "Swashbuckle.AspNetCore >= 6.4.0",
+      "System.IdentityModel.Tokens.Jwt >= 6.31.0"
     ]
   },
   "packageFolders": {
@@ -6732,9 +6797,17 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "BCrypt.Net": {
+            "target": "Package",
+            "version": "[0.1.0, )"
+          },
           "HiNetCloud.System.IdentityModel.Tokens.Jwt": {
             "target": "Package",
-            "version": "[23.6.13.9, )"
+            "version": "[23.5.23.10, )"
+          },
+          "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "target": "Package",
+            "version": "[7.0.5, )"
           },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
@@ -6783,6 +6856,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.4.0, )"
+          },
+          "System.IdentityModel.Tokens.Jwt": {
+            "target": "Package",
+            "version": "[6.31.0, )"
           }
         },
         "imports": [
@@ -6813,7 +6890,17 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'HiNetCloud.System.IdentityModel.Tokens.Jwt 23.6.13.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "BCrypt.Net",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'HiNetCloud.System.IdentityModel.Tokens.Jwt 23.5.23.10' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "HiNetCloud.System.IdentityModel.Tokens.Jwt",
       "targetGraphs": [
         "net7.0"

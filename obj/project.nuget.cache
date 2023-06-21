@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "fYdl113FMqn98I3pEU2ioWrb9pytQCmrWJg05andX/3jAhyG6fbMlw+mx6qeJDBmwvoMnR86G9oZquZs69QcyA==",
+  "dgSpecHash": "ztKz5qlWPezySv2weTPEDPwY0TeO6sYoxvYMCLRdlfm33L8UU/fk+XFHy0EE0DhRM6j1H4AzdN4YgDfU1IxJBA==",
   "success": true,
   "projectFilePath": "/home/sofya/Рабочий стол/курсач/CimdoApi/CimdoApi.csproj",
   "expectedPackageFiles": [
     "/home/sofya/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/azure.identity/1.7.0/azure.identity.1.7.0.nupkg.sha512",
+    "/home/sofya/.nuget/packages/bcrypt.net/0.1.0/bcrypt.net.0.1.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
-    "/home/sofya/.nuget/packages/hinetcloud.system.identitymodel.tokens.jwt/23.6.13.9/hinetcloud.system.identitymodel.tokens.jwt.23.6.13.9.nupkg.sha512",
+    "/home/sofya/.nuget/packages/hinetcloud.system.identitymodel.tokens.jwt/23.5.23.10/hinetcloud.system.identitymodel.tokens.jwt.23.5.23.10.nupkg.sha512",
     "/home/sofya/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/home/sofya/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.5/microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.aspnetcore.openapi/7.0.5/microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
@@ -74,7 +76,7 @@
     "/home/sofya/.nuget/packages/system.formats.asn1/5.0.0/system.formats.asn1.5.0.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/system.globalization/4.3.0/system.globalization.4.3.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/system.globalization.extensions/4.3.0/system.globalization.extensions.4.3.0.nupkg.sha512",
-    "/home/sofya/.nuget/packages/system.identitymodel.tokens.jwt/6.24.0/system.identitymodel.tokens.jwt.6.24.0.nupkg.sha512",
+    "/home/sofya/.nuget/packages/system.identitymodel.tokens.jwt/6.31.0/system.identitymodel.tokens.jwt.6.31.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/system.io/4.3.0/system.io.4.3.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/system.io.filesystem/4.3.0/system.io.filesystem.4.3.0.nupkg.sha512",
     "/home/sofya/.nuget/packages/system.io.filesystem.primitives/4.3.0/system.io.filesystem.primitives.4.3.0.nupkg.sha512",
@@ -125,7 +127,17 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'HiNetCloud.System.IdentityModel.Tokens.Jwt 23.6.13.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "BCrypt.Net",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'HiNetCloud.System.IdentityModel.Tokens.Jwt 23.5.23.10' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "HiNetCloud.System.IdentityModel.Tokens.Jwt",
       "targetGraphs": [
         "net7.0"
