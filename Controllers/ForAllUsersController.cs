@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CimdoApi.Controllers;
 [ApiController]
 [Authorize]
-
-public class OutputBooksController : ControllerBase
+[Route("api/[controller]")]
+public class ForAllUsersController : ControllerBase
 {
     private IEnumerable<Book> GetBooks() //подключение к базе данных
     {
@@ -16,11 +16,23 @@ public class OutputBooksController : ControllerBase
             return context.Books.ToList();
         }
     }
-    [HttpGet]
-    [Route("api/[controller]")]
+    [HttpGet("getbooks")]
     public ActionResult GetDataApi()
     {
         var booksData = GetBooks(); //вывод данных в api
         return Ok(booksData);
+    }
+    private IEnumerable<Gener> GetGeners() //подключение к базе данных
+    {
+        using (var context = new CimdoContext())
+        {
+            return context.Geners.ToList();
+        }
+    }
+    [HttpGet("getgeners")]
+    public ActionResult GetData()
+    {
+        var genersData = GetGeners(); //вывод данных в api
+        return Ok(genersData);
     }
 }

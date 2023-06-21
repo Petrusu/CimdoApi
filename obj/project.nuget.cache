@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ztKz5qlWPezySv2weTPEDPwY0TeO6sYoxvYMCLRdlfm33L8UU/fk+XFHy0EE0DhRM6j1H4AzdN4YgDfU1IxJBA==",
+  "dgSpecHash": "EBBSjoNvLVRUQttyTkjOgjvKPv0jGXnFpbwHBRkSOpDo4hfHgDyRIWUfsbQe6y/Nthoed/G7pc9ZWH4vIC7W/A==",
   "success": true,
   "projectFilePath": "/home/sofya/Рабочий стол/курсач/CimdoApi/CimdoApi.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,9 @@
     "/home/sofya/.nuget/packages/hinetcloud.system.identitymodel.tokens.jwt/23.5.23.10/hinetcloud.system.identitymodel.tokens.jwt.23.5.23.10.nupkg.sha512",
     "/home/sofya/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.5/microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
+    "/home/sofya/.nuget/packages/microsoft.aspnetcore.cryptography.internal/7.0.5/microsoft.aspnetcore.cryptography.internal.7.0.5.nupkg.sha512",
+    "/home/sofya/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/7.0.5/microsoft.aspnetcore.cryptography.keyderivation.7.0.5.nupkg.sha512",
+    "/home/sofya/.nuget/packages/microsoft.aspnetcore.identity.entityframeworkcore/7.0.5/microsoft.aspnetcore.identity.entityframeworkcore.7.0.5.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.aspnetcore.openapi/7.0.5/microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
@@ -31,6 +34,8 @@
     "/home/sofya/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0-preview.5.23280.8/microsoft.extensions.dependencyinjection.8.0.0-preview.5.23280.8.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0-preview.5.23280.8/microsoft.extensions.dependencyinjection.abstractions.8.0.0-preview.5.23280.8.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.extensions.dependencymodel/8.0.0-preview.5.23280.8/microsoft.extensions.dependencymodel.8.0.0-preview.5.23280.8.nupkg.sha512",
+    "/home/sofya/.nuget/packages/microsoft.extensions.identity.core/7.0.5/microsoft.extensions.identity.core.7.0.5.nupkg.sha512",
+    "/home/sofya/.nuget/packages/microsoft.extensions.identity.stores/7.0.5/microsoft.extensions.identity.stores.7.0.5.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.extensions.logging/8.0.0-preview.5.23280.8/microsoft.extensions.logging.8.0.0-preview.5.23280.8.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0-preview.5.23280.8/microsoft.extensions.logging.abstractions.8.0.0-preview.5.23280.8.nupkg.sha512",
     "/home/sofya/.nuget/packages/microsoft.extensions.options/8.0.0-preview.5.23280.8/microsoft.extensions.options.8.0.0-preview.5.23280.8.nupkg.sha512",

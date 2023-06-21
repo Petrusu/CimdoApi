@@ -3,22 +3,22 @@ using System.Net;
 using System.Security.Claims;
 using CimdoApi.Context;
 using CimdoApi.InnerClasses;
+using CimdoApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using BCrypt.Net;
 
-namespace CimdoApi.Controllers
+namespace CimdoApi.Controllers;
+[Route("api/[controller]")]
+[ApiController]
+public class RegistrationOrLoginController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LoginController : ControllerBase
-    {
-        private readonly IConfiguration _configuration;
+    private readonly IConfiguration _configuration;
         private readonly CimdoContext _context;
         private int TokenTimeoutMinutes = 5; // Время истечения срока действия токена в минутах
         private DateTime _tokenCreationTime;
     
-        public LoginController(IConfiguration configuration, CimdoContext context)
+        public RegistrationOrLoginController(IConfiguration configuration, CimdoContext context)
         {
             _configuration = configuration;
             _context = context;
@@ -58,6 +58,45 @@ namespace CimdoApi.Controllers
                 return BadRequest("Username or Password Invalid!");
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser(ModelUser model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Проверяем, существует ли пользователь с таким же именем пользователя или email'ом
+            if (await _context.Users.AnyAsync(u => u.Login == model.Login || u.Email == model.Email))
+            {
+                return Conflict("A user with the same username or email address already exists");
+            }
+
+            //проверка пароля
+            if (model.Password == model.PasswordAgain)
+            {
+                // Шифрование пароля
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                // Создаем нового пользователя
+                var user = new User
+                {
+                    Login = model.Login,
+                    Email = model.Email,
+                    Password =
+                        hashedPassword // Обычно пароль нужно хранить в зашифрованном виде, но для примера оставим его в открытом виде
+                };
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return BadRequest("Password mismatch!");
+            }
+
+            return Ok("User successfully registered");
+        }
 
         private string CreateToken(int userId)
         {
@@ -79,5 +118,4 @@ namespace CimdoApi.Controllers
 
             return jwt;
         }
-    }
 }
