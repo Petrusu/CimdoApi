@@ -1,10 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
 using CimdoApi.Context;
 using CimdoApi.InnerClasses;
 using CimdoApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CimdoApi.Controllers;
 [ApiController]
@@ -12,10 +15,14 @@ namespace CimdoApi.Controllers;
 [Route("api/[controller]")]
 public class ForAllUsersController : ControllerBase
 {
-    private readonly CimdoContext _context; //подключение к базе данных
-    public ForAllUsersController(CimdoContext context)
+    private readonly IConfiguration _configuration;
+    private readonly CimdoContext _context;
+    private int TokenTimeoutMinutes = 5; // Время истечения срока действия токена в минутах
+    private DateTime _tokenCreationTime;
+    public ForAllUsersController(CimdoContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
     }
     //создание списка книг
     private static IEnumerable<Book> GetBooks() //подключение к базе данных
@@ -104,6 +111,71 @@ public class ForAllUsersController : ControllerBase
 
         return Ok(books); //выводим рекомендованные книги
     }
+    
+    [HttpPost("login")]
+        public IActionResult Authenticate([FromForm] string login, [FromForm] string password)
+        {
+            // Проверяем, существует ли пользователь
+            var user = _context.Users.FirstOrDefault(u => u.Login == login);
+            if (user == null)
+            {
+                return Unauthorized(); // Пользователь не найден
+            }
+
+            var loginResponse = new LoginResponse();
+
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+            // Если пароль действителен
+            if (isPasswordValid)
+            {
+                string token = CreateToken(user.IdUser);
+
+                loginResponse.Token = token;
+                loginResponse.ResponseMsg = new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK
+                };
+
+                // Возвращаем токен
+                return Ok(new { loginResponse });
+            }
+            else
+            {
+                // Если имя пользователя или пароль недействительны, отправляем статус-код "BadRequest" в ответе
+                return BadRequest("Username or Password Invalid!");
+            }
+        }
+        
+        [HttpPost("registration")]
+        public async Task<IActionResult> RegisterUser(User model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Проверяем, существует ли пользователь с таким же именем пользователя или email'ом
+            if (await _context.Users.AnyAsync(u => u.Login == model.Login || u.Email == model.Email))
+            {
+                return Conflict("A user with the same username or email address already exists");
+            }
+            
+            // Шифрование пароля
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+            // Создаем нового пользователя
+            var user = new User
+            {
+                Login = model.Login,
+                Email = model.Email,
+                Password =
+                    hashedPassword // Обычно пароль нужно хранить в зашифрованном виде, но для примера оставим его в открытом виде
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return Ok("User successfully registered");
+        }
 
     //добавление книги в избранное
     [HttpPost("addbookforfavorite")]
@@ -140,6 +212,66 @@ public class ForAllUsersController : ControllerBase
 
         return Ok("Gener add to favorite.");
     }
+    
+    //запрос на изменения пароля
+    [HttpPut("changepassword")]
+    public IActionResult ChangePassword(User requeat)
+    {
+        // Проверяем, существует ли пользователь
+        var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
+        if (user == null)
+        {
+            return Unauthorized(); // Пользователь не найден
+        }
+        
+        // Шифрование пароля
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(requeat.Password);
+        user.Password = hashedPassword;
+        _context.SaveChanges(); //сохранения нового пароля
+        return Ok("Password changed");
+    }
+    
+    //изменения email
+    [HttpPut("changeemail")]
+    public IActionResult ChangeEmail(Models.User requeat)
+    {
+        // Проверяем, существует ли пользователь
+        var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
+        if (user == null)
+        {
+            return Unauthorized(); // Пользователь не найден
+        }
+
+        user.Email = requeat.Email;
+
+        _context.SaveChanges(); //сохранение нового мыла
+
+        return Ok("Email changed");
+    }
+    
+    //изменение логина
+    [HttpPut("changelogin")]
+    public IActionResult ChangeLogin(User requeat)
+    {
+        // Проверяем, существует ли пользователь
+        var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
+        if (user == null)
+        {
+            return Unauthorized(); // Пользователь не найден
+        }
+        
+        // Проверяем, что новый логин не совпадает ни с одним из существующих логинов
+        var existingUser = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
+        if (existingUser != null)
+        {
+            return BadRequest("Login already exists"); // Логин уже существует
+        }
+
+        user.Login = requeat.Login;
+        _context.SaveChanges(); //сохранение нового логина
+
+        return Ok("Login changed");
+    }
 
     //удаляем книгу из избранного
     [HttpDelete("removebookfromfavorites")]
@@ -156,6 +288,27 @@ public class ForAllUsersController : ControllerBase
         await _context.SaveChangesAsync(); //сохраняем
 
         return Ok("Book delited"); 
+    }
+    
+    private string CreateToken(int userId)
+    {
+        var claims = new List<Claim>()
+        {
+            // Список претензий (claims) - мы проверяем только id пользователя, можно добавить больше претензий.
+            new Claim("userId", Convert.ToString(userId)),
+        };
+
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+        var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(TokenTimeoutMinutes),
+            signingCredentials: cred
+        );
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return jwt;
     }
     
     //получение id пользователя из токена
