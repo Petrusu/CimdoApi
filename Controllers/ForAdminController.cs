@@ -4,6 +4,7 @@ using CimdoApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace CimdoApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
@@ -19,7 +20,7 @@ public class ForAdminController : ControllerBase
     
     //добавление нового автоора
     [HttpPost("addauthor")]
-    public IActionResult AddAuthor(ModelAuthor author)
+    public IActionResult AddAuthor(Author author)
     {
         Author authorModel = new Author(); //экземпляр класса автора
 
@@ -33,7 +34,7 @@ public class ForAdminController : ControllerBase
     
     //добавление новой книги
     [HttpPost("addbook")]
-    public IActionResult AddBook(ModelBook book)
+    public IActionResult AddBook(Book book)
     {
         Book booknModel = new Book(); //экземпляр класса книги
 
@@ -48,7 +49,7 @@ public class ForAdminController : ControllerBase
     }
     //добавление жанров к книге
     [HttpPost("addgenerstobooks")]
-    public IActionResult AddGenersToBooks(ModelBooksGeners booksgeners)
+    public IActionResult AddGenersToBooks(BooksGener booksgeners)
     {
         BooksGener modelbooksgeners = new BooksGener(); //экземпляр класса жанр-книга
 
@@ -61,7 +62,7 @@ public class ForAdminController : ControllerBase
         return Ok("Genre added to book.");
     }
     //создание списка пользователей
-    private IEnumerable<User> GetUsers() //подключение к базе данных
+    private List<Models.User> GetUsers() //подключение к базе данных
     {
         using (var context = new CimdoContext())
         {

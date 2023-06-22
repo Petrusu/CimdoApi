@@ -1,5 +1,6 @@
 using CimdoApi.Context;
 using CimdoApi.InnerClasses;
+using CimdoApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ public class EditProfileController : ControllerBase
 
     //запрос на изменения пароля
     [HttpPut("changepassword")]
-    public IActionResult ChangePassword(ModelChangePassword requeat)
+    public IActionResult ChangePassword(User requeat)
     {
         // Проверяем, существует ли пользователь
         var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
@@ -27,35 +28,16 @@ public class EditProfileController : ControllerBase
             return Unauthorized(); // Пользователь не найден
         }
         
-        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(requeat.OldPassword, user.Password); //тк пароль зашифрованный, то идет проверка размерности старого пароля
-
-        // Если пароль действителен
-        if (isPasswordValid)
-        {
-            if (requeat.Password == requeat.PasswordAgain) //проверка точности пароля
-            {
-                // Шифрование пароля
-                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(requeat.Password);
-
-                user.Password = hashedPassword;
-
-                _context.SaveChanges(); //сохранения нового пароля
-                return Ok("Password changed");
-            }
-            else
-            {
-                return BadRequest("Password mismatch"); //если пароли не совпадают
-            }
-        }
-        else
-        {
-            return BadRequest("Old password is not mismatch"); //если старый пароль не совпадает
-        }
+        // Шифрование пароля
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(requeat.Password);
+        user.Password = hashedPassword;
+        _context.SaveChanges(); //сохранения нового пароля
+        return Ok("Password changed");
     }
     
     //изменения email
     [HttpPut("changeemail")]
-    public IActionResult ChangeEmail(ModelChangeEmail requeat)
+    public IActionResult ChangeEmail(Models.User requeat)
     {
         // Проверяем, существует ли пользователь
         var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
@@ -73,10 +55,10 @@ public class EditProfileController : ControllerBase
     
     //изменение логина
     [HttpPut("changelogin")]
-    public IActionResult ChangeLogin(ModelChangeLogin requeat)
+    public IActionResult ChangeLogin(User requeat)
     {
         // Проверяем, существует ли пользователь
-        var user = _context.Users.FirstOrDefault(u => u.Login == requeat.OldLogin);
+        var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
         if (user == null)
         {
             return Unauthorized(); // Пользователь не найден
