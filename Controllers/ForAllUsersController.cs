@@ -11,7 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CimdoApi.Controllers;
 [ApiController]
-[Authorize]
 [Route("api/[controller]")]
 public class ForAllUsersController : ControllerBase
 {
@@ -34,6 +33,7 @@ public class ForAllUsersController : ControllerBase
     }
     //запрос на вывод всех вниг
     [HttpGet("getbooks")]
+    [Authorize]
     public ActionResult GetDataApi()
     {
         var booksData = GetBooks(); //вывод данных в api
@@ -49,6 +49,7 @@ public class ForAllUsersController : ControllerBase
     }
     //вывод жанров
     [HttpGet("getgeners")]
+    [Authorize]
     public ActionResult GetData()
     {
         var genersData = GetGeners(); //вывод данных в api
@@ -56,6 +57,7 @@ public class ForAllUsersController : ControllerBase
     }
     //запрос на информацию о конкретной книге
     [HttpGet("getinformationaboutbook")]
+    [Authorize]
     public async Task<ActionResult<ModelBookForFavarite>> GetInformationAboutBook(int bookId)
     {
         int userId = GetUserIdFromToken(); //из токена получаем id пользователя
@@ -84,6 +86,7 @@ public class ForAllUsersController : ControllerBase
     }
     //рекомендация книг для пользователя
     [HttpGet("recommendations")]
+    [Authorize]
     public async Task<IActionResult> GetRecommendedBooks()
     {
         // Получаем id пользователя из токена
@@ -179,6 +182,7 @@ public class ForAllUsersController : ControllerBase
 
     //добавление книги в избранное
     [HttpPost("addbookforfavorite")]
+    [Authorize]
     public IActionResult AddBookForFavorite(int idBook)
     {
 
@@ -197,6 +201,7 @@ public class ForAllUsersController : ControllerBase
 
     //добавляем предпочитаемые жанры
     [HttpPost("addfavoritegeners")]
+    [Authorize]
     public IActionResult AddFavoriteGeners(int idGener)
     {
 
