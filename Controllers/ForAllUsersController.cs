@@ -116,10 +116,10 @@ public class ForAllUsersController : ControllerBase
     }
     
     [HttpPost("login")]
-        public IActionResult Authenticate([FromForm] string login, [FromForm] string password)
+        public IActionResult Authenticate(LoginUser user_)
         {
             // Проверяем, существует ли пользователь
-            var user = _context.Users.FirstOrDefault(u => u.Login == login);
+            var user = _context.Users.FirstOrDefault(u => u.Login == user_.Login);
             if (user == null)
             {
                 return Unauthorized(); // Пользователь не найден
@@ -127,7 +127,7 @@ public class ForAllUsersController : ControllerBase
 
             var loginResponse = new LoginResponse();
 
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user_.Password, user.Password);
 
             // Если пароль действителен
             if (isPasswordValid)
@@ -238,7 +238,7 @@ public class ForAllUsersController : ControllerBase
     
     //изменения email
     [HttpPut("changeemail")]
-    public IActionResult ChangeEmail(Models.User requeat)
+    public IActionResult ChangeEmail(User requeat)
     {
         // Проверяем, существует ли пользователь
         var user = _context.Users.FirstOrDefault(u => u.Login == requeat.Login);
